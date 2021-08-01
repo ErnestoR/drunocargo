@@ -3,7 +3,6 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  mode: "jit",
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -13,6 +12,10 @@ module.exports = {
       },
       colors: {
         gray: colors.trueGray,
+        nuvoGreen: {
+          base: "#307460",
+          light: "#3C9279",
+        },
       },
     },
   },
