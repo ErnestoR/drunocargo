@@ -1,11 +1,5 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import colors from "tailwindcss/colors";
-
 import DropdownMenu from "./DropdownMenu";
 
-/* This example requires Tailwind CSS v2.0+ */
 const deliveries = [
   {
     orderID: "009-300FCT",
@@ -23,108 +17,11 @@ const deliveries = [
     drone: "DJI-004Q",
     technicalCheck: "Passed",
   },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  // More people...
 ];
 
 const Table = () => {
   return (
-    <div className="py-2 align-middle min-w-full sm:px-6 lg:px-8 w-64">
+    <div className="py-2 align-middle min-w-full sm:px-6 lg:px-8 w-64 h-96">
       <table className="min-w-full divide-y divide-gray-200 overflow-hidden max-h-64">
         <tbody className="divide-y divide-gray-200">
           {deliveries.map((delivery) => (
@@ -163,7 +60,7 @@ const Table = () => {
               <td className="flex-1 px-6 py-4 flex gap-4">
                 <div className="xl:w-28">
                   <button
-                    className="inline-flex justify-between items-center w-full px-4 py-2 text-sm font-medium bg-white text-black border-grey border border-opacity-10 border-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                    className="inline-flex justify-between items-center w-full px-4 py-2 text-sm font-medium bg-white text-black border-grey border border-opacity-10 border-black rounded-md bg-opacity-20 hover:bg-opacity-20 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:ring-2 focus:ring-nuvoGreen-base "
                     aria-label="Details"
                   >
                     <span className="hidden xl:block">Details</span>
