@@ -2,6 +2,7 @@ import useLocalStorage from "hooks/useLocalStorage";
 import NavBar from "components/NavBar";
 import Footer from "components/Footer";
 import Table from "components/Table";
+import NewDeliveryModal from "components/NewDeliveryModal";
 
 import initialData from "./initialData.json";
 import { useState } from "react";
@@ -9,6 +10,15 @@ import { useState } from "react";
 const Home = () => {
   const [search, setSearch] = useState("");
   const [data, setDeliveries] = useLocalStorage("nuvo-deliveries", initialData);
+  const [newModalOpen, setNewModalOpen] = useState(!false);
+
+  function openModal() {
+    setNewModalOpen(true);
+  }
+
+  function closeModal() {
+    setNewModalOpen(false);
+  }
 
   const deliveries =
     search === ""
@@ -37,7 +47,10 @@ const Home = () => {
               }}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button className="bg-nuvoGreen-base rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-nuvoGreen-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nuvoGreen-base">
+            <button
+              className="bg-nuvoGreen-base rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-nuvoGreen-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nuvoGreen-base"
+              onClick={openModal}
+            >
               New delivery
             </button>
           </div>
@@ -45,6 +58,7 @@ const Home = () => {
         <Table data={deliveries} isSearching={!!search} />
       </div>
       <Footer />
+      <NewDeliveryModal isOpen={newModalOpen} closeModal={closeModal} />
     </div>
   );
 };
