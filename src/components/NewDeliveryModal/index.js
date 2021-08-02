@@ -1,9 +1,31 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  orderID: yup.string().required(),
+  status: yup.string().oneOf(["Ready", "Not Ready"]),
+  technician: yup.string().required(),
+  platform: yup.string().oneOf(["Alpha", "Beta", "Gamma", "Tetha"]),
+  drone: yup.string().oneOf(["DJI-004Q"]),
+  technicalCheck: yup.boolean(),
+});
 
 const NewDeliveryModal = (props) => {
-  const { isOpen, closeModal } = props;
+  const { isOpen, closeModal, createDeliveryEntry } = props;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = (data) => {
+    createDeliveryEntry(data);
+  };
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -12,7 +34,10 @@ const NewDeliveryModal = (props) => {
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={closeModal}
       >
-        <div className="min-h-screen px-4 text-center">
+        <form
+          className="min-h-screen px-4 text-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -42,7 +67,7 @@ const NewDeliveryModal = (props) => {
             leaveTo="opacity-0 scale-95"
           >
             <div className="inline-block w-full max-w-md  overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl border-gray-300 border">
-              <div className="px-6 py-4 mt-2 mb-0">
+              <div className="px-6 py-6 mt-2 mb-0">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
@@ -67,20 +92,26 @@ const NewDeliveryModal = (props) => {
                   <div className="grid grid-cols-2 gap-4 ">
                     <div className="flex flex-col gap-1">
                       <label
-                        for="orderID"
+                        htmlFor="orderID"
                         className="font-normal text-gray-500 "
                       >
-                        Order ID
+                        Order ID *
                       </label>
                       <input
                         name="orderID"
                         type="text"
                         className="rounded border-gray-300 shadow"
+                        {...register("orderID")}
                       />
+                      {errors?.orderID && (
+                        <label className="text-red-400 text-sm">
+                          {errors?.orderID.message}
+                        </label>
+                      )}
                     </div>
                     <div className="flex flex-col gap-1">
                       <label
-                        for="technician"
+                        htmlFor="technician"
                         className="font-normal text-gray-500 "
                       >
                         Technician
@@ -89,33 +120,58 @@ const NewDeliveryModal = (props) => {
                         name="technician"
                         type="text"
                         className="rounded border-gray-300 shadow"
+                        {...register("technician")}
                       />
+                      {errors?.technician && (
+                        <label className="text-red-400 text-sm">
+                          {errors?.technician.message}
+                        </label>
+                      )}
                     </div>
                     <div className="flex flex-col gap-1">
                       <label
-                        for="platform"
+                        htmlFor="platform"
                         className="font-normal text-gray-500 "
                       >
                         Platform
                       </label>
-                      <input
+                      <select
                         name="platform"
-                        type="text"
                         className="rounded border-gray-300 shadow"
-                      />
+                        {...register("platform")}
+                      >
+                        <option value=""></option>
+                        <option value="Alpha">Alpha</option>
+                        <option value="Beta">Beta</option>
+                        <option value="Gamma">Gamma</option>
+                        <option value="Tetha">Tetha</option>
+                      </select>
+                      {errors?.platform && (
+                        <label className="text-red-400 text-sm">
+                          {errors?.platform.message}
+                        </label>
+                      )}
                     </div>
                     <div className="flex flex-col gap-1">
                       <label
-                        for="droneID"
+                        htmlFor="drone"
                         className="font-normal text-gray-500 "
                       >
                         Drone
                       </label>
-                      <input
-                        name="droneID"
-                        type="text"
+                      <select
+                        name="drone"
                         className="rounded border-gray-300 shadow"
-                      />
+                        {...register("drone")}
+                      >
+                        <option value=""></option>
+                        <option value="DJI-004Q">DJI-004Q</option>
+                      </select>
+                      {errors?.drone && (
+                        <label className="text-red-400 text-sm">
+                          {errors?.drone.message}
+                        </label>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -130,7 +186,7 @@ const NewDeliveryModal = (props) => {
                   Cancel
                 </button>
                 <button
-                  type="button"
+                  type="submit"
                   className="bg-nuvoGreen-base rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-nuvoGreen-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nuvoGreen-base"
                 >
                   Create new delivery
@@ -138,7 +194,7 @@ const NewDeliveryModal = (props) => {
               </div>
             </div>
           </Transition.Child>
-        </div>
+        </form>
       </Dialog>
     </Transition>
   );
