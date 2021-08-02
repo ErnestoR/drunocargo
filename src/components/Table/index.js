@@ -1,30 +1,27 @@
 import DropdownMenu from "./DropdownMenu";
 
-const deliveries = [
-  {
-    orderID: "009-300FCT",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-  {
-    orderID: "009-300FCT1",
-    status: "Ready",
-    technician: "Ben Santana",
-    platform: "Gamma",
-    drone: "DJI-004Q",
-    technicalCheck: "Passed",
-  },
-];
+import { TruckIcon } from "@heroicons/react/outline";
 
-const Table = () => {
+const Table = (props) => {
+  const { data = [] } = props;
+
+  if (data.length === 0) {
+    return (
+      <div className="mt-32 flex flex-col justify-center items-center text-gray-500 gap-4 ">
+        <div className="flex items-center gap-4">
+          <TruckIcon className="text-xl w-20 h-20" />
+          <h1 className="text-3xl">No data</h1>
+        </div>
+        <h1 className="text-xl">Please add some deliveries.</h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="py-2 align-middle min-w-full sm:px-6 lg:px-8 w-64 h-96">
-      <table className="min-w-full divide-y divide-gray-200 overflow-hidden max-h-64">
+    <div className="py-2 align-middle min-w-full sm:px-6 lg:px-8 w-64 h-96 h-full overflow-y-auto relative">
+      <table className="min-w-full divide-y divide-gray-200 overflow-hidden overflow-y-auto">
         <tbody className="divide-y divide-gray-200">
-          {deliveries.map((delivery) => (
+          {data.map((delivery) => (
             <tr
               key={delivery.orderID}
               className="divide-x-reverse border-gray-900  border-solid hover:bg-green-100 hover:bg-opacity-90 flex"
