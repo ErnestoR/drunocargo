@@ -3,22 +3,24 @@ import DropdownMenu from "./DropdownMenu";
 import { TruckIcon } from "@heroicons/react/outline";
 
 const Table = (props) => {
-  const { data = [] } = props;
+  const { data = [], isSearching } = props;
 
   if (data.length === 0) {
     return (
-      <div className="mt-32 flex flex-col justify-center items-center text-gray-500 gap-4 ">
+      <div className="mt-32 mb-auto flex flex-col justify-center items-center text-gray-500 gap-4 ">
         <div className="flex items-center gap-4">
           <TruckIcon className="text-xl w-20 h-20" />
           <h1 className="text-3xl">No data</h1>
         </div>
-        <h1 className="text-xl">Please add some deliveries.</h1>
+        {!isSearching && (
+          <h1 className="text-xl">Please add some deliveries.</h1>
+        )}
       </div>
     );
   }
 
   return (
-    <div className="py-2 align-middle min-w-full sm:px-6 lg:px-8 w-64 h-96 h-full overflow-y-auto relative">
+    <div className="py-2 align-middle min-w-full sm:px-6 lg:px-8 w-64 h-full overflow-y-auto relative flex-auto">
       <table className="min-w-full divide-y divide-gray-200 overflow-hidden overflow-y-auto">
         <tbody className="divide-y divide-gray-200">
           {data.map((delivery) => (

@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <div className="flex flex-col w-screen min-h-screen">
       <NavBar />
-      <div className="lg:container lg:mx-auto flex flex-col mx-10 flex-auto">
+      <div className="lg:container lg:mx-auto flex flex-col mx-10 flex-auto min-h-full">
         <div className="flex justify-between">
           <h1 className="text-2xl sm:text-3xl mb-3">
             Delivery <span className=" font-light opacity-50">History</span>
@@ -42,9 +42,9 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <Table data={deliveries} />
-        <Footer />
+        <Table data={deliveries} isSearching={!!search} />
       </div>
+      <Footer />
     </div>
   );
 };
