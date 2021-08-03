@@ -3,7 +3,7 @@ import DropdownMenu from "./DropdownMenu";
 import { TruckIcon } from "@heroicons/react/outline";
 
 const Table = (props) => {
-  const { data = [], isSearching } = props;
+  const { data = [], isSearching, deleteDelivery, editDelivery } = props;
 
   if (data.length === 0) {
     return (
@@ -53,13 +53,13 @@ const Table = (props) => {
               <td className="flex-1 px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">Technical check</div>
                 <div className="text-sm text-gray-500">
-                  {delivery.technicalCheck}
+                  {delivery.technicalCheck ? "Passed" : "Failed"}
                 </div>
               </td>
               <td className="flex-1 px-6 py-4 flex gap-4">
                 <div className="xl:w-28">
                   <button
-                    className="inline-flex justify-between items-center w-full px-4 py-2 text-sm font-medium bg-white text-black border-grey border border-opacity-10 border-black rounded-md bg-opacity-20 hover:bg-opacity-20 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:ring-2 focus:ring-nuvoGreen-base "
+                    className="inline-flex justify-between items-center w-full px-4 py-2 text-sm font-medium bg-white text-black border-grey border border-opacity-10 border-black rounded-md bg-opacity-20 hover:bg-opacity-20 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:ring-2 focus:ring-nuvoGreen-base"
                     aria-label="Details"
                   >
                     <span className="hidden xl:block">Details</span>
@@ -79,7 +79,11 @@ const Table = (props) => {
                   </button>
                 </div>
                 <div className="w-28">
-                  <DropdownMenu />
+                  <DropdownMenu
+                    delivery={delivery}
+                    deleteDelivery={deleteDelivery}
+                    editDelivery={editDelivery}
+                  />
                 </div>
               </td>
             </tr>

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useRef, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { useForm } from "react-hook-form";
@@ -7,31 +7,54 @@ import * as yup from "yup";
 
 const schema = yup.object().shape({
   orderID: yup.string().required(),
-  status: yup.string().oneOf(["Ready", "Not Ready"]),
+  status: yup.string().oneOf(["Ready", "Not Ready"]).default("Ready"),
   technician: yup.string().required(),
   platform: yup.string().oneOf(["Alpha", "Beta", "Gamma", "Tetha"]),
   drone: yup.string().oneOf(["DJI-004Q"]),
-  technicalCheck: yup.boolean(),
+  technicalCheck: yup.boolean().default(true),
 });
 
 const NewDeliveryModal = (props) => {
-  const { isOpen, closeModal, createDeliveryEntry } = props;
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+    isOpen,
+    closeModal,
+    createDeliveryEntry,
+    editDeliveryEntry,
+    isEditMode,
+    values = {},
+  } = props;
+  let createButtonRef = useRef(null);
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(schema),
+    criteriaMode: "all",
   });
   const onSubmit = (data) => {
-    createDeliveryEntry(data);
+    if (isEditMode) {
+      editDeliveryEntry(data);
+    } else {
+      createDeliveryEntry(data);
+    }
   };
+
+  const { errors } = formState;
+
+  // Reset form onOpen
+  useEffect(() => {
+    if (isOpen) {
+      if (isEditMode) {
+        reset(values);
+      } else {
+        reset({});
+      }
+    }
+  }, [isOpen, isEditMode, values, reset]);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
+        initialFocus={createButtonRef}
         onClose={closeModal}
       >
         <form
@@ -72,10 +95,11 @@ const NewDeliveryModal = (props) => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  New delivery
+                  {isEditMode ? "Update delivery" : "New delivery"}
                 </Dialog.Title>
                 <div className="absolute top-4 right-4">
                   <button
+                    type="button"
                     className="text-gray-500 rounded-2xl p-1  hover:bg-nuvoGreen-light bg-opacity-20 hover:text-white"
                     onClick={closeModal}
                   >
@@ -100,9 +124,19 @@ const NewDeliveryModal = (props) => {
                       <input
                         name="orderID"
                         type="text"
-                        className="rounded border-gray-300 shadow"
+                        className="rounded border-gray-300 shadow disabled:bg-gray-300"
+                        disabled={isEditMode}
                         {...register("orderID")}
                       />
+                      {isEditMode && (
+                        // disabled fields dont get submitted
+                        <input
+                          name="orderID"
+                          type="text"
+                          className="hidden"
+                          {...register("orderID")}
+                        />
+                      )}
                       {errors?.orderID && (
                         <label className="text-red-400 text-sm">
                           {errors?.orderID.message}
@@ -186,10 +220,11 @@ const NewDeliveryModal = (props) => {
                   Cancel
                 </button>
                 <button
+                  ref={createButtonRef}
                   type="submit"
                   className="bg-nuvoGreen-base rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-nuvoGreen-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nuvoGreen-base"
                 >
-                  Create new delivery
+                  {isEditMode ? "Update delivery" : "Create new delivery"}
                 </button>
               </div>
             </div>

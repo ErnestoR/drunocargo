@@ -2,7 +2,9 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 
-const DropdownMenu = () => {
+const DropdownMenu = (props) => {
+  const { delivery, deleteDelivery, editDelivery } = props;
+
   return (
     <Menu as="div" className="absolute inline-block text-left">
       <div>
@@ -31,6 +33,7 @@ const DropdownMenu = () => {
                   className={`${
                     active ? "bg-nuvoGreen-base text-white" : "text-gray-900"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={() => editDelivery(delivery)}
                 >
                   {active ? (
                     <EditActiveIcon
@@ -53,6 +56,7 @@ const DropdownMenu = () => {
                   className={`${
                     active ? "bg-nuvoGreen-base text-white" : "text-gray-900"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={() => deleteDelivery(delivery)}
                 >
                   {active ? (
                     <DeleteActiveIcon

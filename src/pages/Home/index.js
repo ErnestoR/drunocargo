@@ -1,3 +1,5 @@
+import produce from "immer";
+
 import useLocalStorage from "hooks/useLocalStorage";
 import NavBar from "components/NavBar";
 import Footer from "components/Footer";
@@ -10,14 +12,56 @@ import { useState } from "react";
 const Home = () => {
   const [search, setSearch] = useState("");
   const [data, setDeliveries] = useLocalStorage("nuvo-deliveries", initialData);
-  const [newModalOpen, setNewModalOpen] = useState(!false);
+  const [modalState, setModalState] = useState(null);
 
-  function openModal() {
-    setNewModalOpen(true);
+  function openNewModal() {
+    setModalState(true);
+  }
+
+  function openEditModal(editEntry) {
+    setModalState(editEntry);
   }
 
   function closeModal() {
-    setNewModalOpen(false);
+    setModalState(false);
+  }
+
+  function createDeliveryEntry(newEntry) {
+    const addedDeliveriesData = produce(data, (draft) => {
+      draft.deliveries.unshift(newEntry);
+    });
+
+    setDeliveries(addedDeliveriesData);
+    setModalState(false);
+  }
+
+  function editDeliveryEntryByOrderID(delivery) {
+    const editedDeliveriesData = produce(data, (draft) => {
+      const index = draft.deliveries.findIndex(
+        (item) => item.orderID === delivery.orderID
+      );
+
+      if (index !== -1) {
+        draft.deliveries[index] = delivery;
+      }
+    });
+
+    setDeliveries(editedDeliveriesData);
+    setModalState(false);
+  }
+
+  function deleteDeliveryEntryByOrderID(delivery) {
+    const deletedDeliveriesData = produce(data, (draft) => {
+      const index = draft.deliveries.findIndex(
+        (item) => item.orderID === delivery.orderID
+      );
+
+      if (index !== -1) {
+        draft.deliveries.splice(index, 1);
+      }
+    });
+
+    setDeliveries(deletedDeliveriesData);
   }
 
   const deliveries =
@@ -49,16 +93,28 @@ const Home = () => {
             />
             <button
               className="bg-nuvoGreen-base rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-nuvoGreen-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nuvoGreen-base"
-              onClick={openModal}
+              onClick={openNewModal}
             >
               New delivery
             </button>
           </div>
         </div>
-        <Table data={deliveries} isSearching={!!search} />
+        <Table
+          data={deliveries}
+          isSearching={!!search}
+          deleteDelivery={deleteDeliveryEntryByOrderID}
+          editDelivery={openEditModal}
+        />
       </div>
       <Footer />
-      <NewDeliveryModal isOpen={newModalOpen} closeModal={closeModal} />
+      <NewDeliveryModal
+        isOpen={!!modalState}
+        isEditMode={modalState !== true}
+        closeModal={closeModal}
+        createDeliveryEntry={createDeliveryEntry}
+        editDeliveryEntry={editDeliveryEntryByOrderID}
+        values={modalState}
+      />
     </div>
   );
 };
