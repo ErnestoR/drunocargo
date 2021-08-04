@@ -4,8 +4,8 @@ import produce from "immer";
 import useLocalStorage from "hooks/useLocalStorage";
 import NavBar from "components/NavBar";
 import Footer from "components/Footer";
-import Table from "components/Table";
-import NewDeliveryModal from "components/NewDeliveryModal";
+import Table from "components/DeliveryTable";
+import NewDeliveryModal from "components/DeliveryModal";
 import initialData from "data/initialData.json";
 
 const Home = () => {
