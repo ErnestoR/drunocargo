@@ -1,3 +1,4 @@
+import { useState } from "react";
 import produce from "immer";
 
 import useLocalStorage from "hooks/useLocalStorage";
@@ -5,9 +6,7 @@ import NavBar from "components/NavBar";
 import Footer from "components/Footer";
 import Table from "components/Table";
 import NewDeliveryModal from "components/NewDeliveryModal";
-
-import initialData from "./initialData.json";
-import { useState } from "react";
+import initialData from "data/initialData.json";
 
 const Home = () => {
   const [search, setSearch] = useState("");

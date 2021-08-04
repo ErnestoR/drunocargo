@@ -1,6 +1,7 @@
-import DropdownMenu from "./DropdownMenu";
-
+import { Link } from "react-router-dom";
 import { TruckIcon } from "@heroicons/react/outline";
+
+import DropdownMenu from "./DropdownMenu";
 
 const Table = (props) => {
   const { data = [], isSearching, deleteDelivery, editDelivery } = props;
@@ -58,25 +59,27 @@ const Table = (props) => {
               </td>
               <td className="flex-1 px-6 py-4 flex gap-4">
                 <div className="xl:w-28">
-                  <button
-                    className="inline-flex justify-between items-center w-full px-4 py-2 text-sm font-medium bg-white text-black border-grey border border-opacity-10 border-black rounded-md bg-opacity-20 hover:bg-opacity-20 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:ring-2 focus:ring-nuvoGreen-base"
-                    aria-label="Details"
-                  >
-                    <span className="hidden xl:block">Details</span>
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                  <Link to={`/shipment/${delivery.orderID}`}>
+                    <button
+                      className="inline-flex justify-between items-center w-full px-4 py-2 text-sm font-medium bg-white text-black border-grey border border-opacity-10 border-black rounded-md bg-opacity-20 hover:bg-opacity-20 hover:bg-green-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:ring-2 focus:ring-nuvoGreen-base"
+                      aria-label="Details"
                     >
-                      <path
-                        d="M2 4V20H22V4H2ZM20 8.67H17.5V6H20V8.67ZM17.5 10.67H20V13.34H17.5V10.67ZM4 6H15.5V18H4V6ZM17.5 18V15.33H20V18H17.5Z"
-                        fill="#000000"
-                        opacity="0.25"
-                      />
-                    </svg>
-                  </button>
+                      <span className="hidden xl:block">Details</span>
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M2 4V20H22V4H2ZM20 8.67H17.5V6H20V8.67ZM17.5 10.67H20V13.34H17.5V10.67ZM4 6H15.5V18H4V6ZM17.5 18V15.33H20V18H17.5Z"
+                          fill="#000000"
+                          opacity="0.25"
+                        />
+                      </svg>
+                    </button>
+                  </Link>
                 </div>
                 <div className="w-28">
                   <DropdownMenu
