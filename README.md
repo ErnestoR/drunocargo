@@ -1,4 +1,17 @@
-# Getting Started with Create React App
+# DrunoCargo
+
+Sample app built with:
+
+- TailwindCSS
+- headlessui
+- immer
+- react-hook-form
+- react-router-dom
+- yup
+
+### TODO
+
+- [ ] Fix bug where user can add another registry with duplicate ID.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
