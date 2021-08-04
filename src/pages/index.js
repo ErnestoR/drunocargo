@@ -76,14 +76,14 @@ const Home = () => {
     <div className="flex flex-col w-screen min-h-screen">
       <NavBar />
       <div className="lg:container lg:mx-auto flex flex-col mx-10 flex-auto min-h-full">
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-col sm:flex-row">
           <h1 className="text-2xl sm:text-3xl mb-3">
             Delivery <span className=" font-light opacity-50">History</span>
           </h1>
-          <div className="flex gap-4 p-1">
+          <div className="flex gap-2 sm:gap-4 p-1 flex-1 w-full justify-between sm:justify-end">
             <input
               type="text"
-              className="rounded border-opacity-10 border-gray-900 focus:outline-none focus:ring-2  focus:ring-nuvoGreen-base"
+              className="rounded border-opacity-10 border-gray-900 focus:outline-none text-sm sm:text-base focus:ring-2  focus:ring-nuvoGreen-base"
               placeholder="&#xF002; Search"
               style={{
                 fontFamily: "Inter var, FontAwesome",
@@ -91,7 +91,7 @@ const Home = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
             <button
-              className="bg-nuvoGreen-base rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-nuvoGreen-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nuvoGreen-base"
+              className="bg-nuvoGreen-base rounded-md border border-transparent shadow-sm text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2 font-medium text-white hover:bg-nuvoGreen-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nuvoGreen-base"
               onClick={openNewModal}
             >
               New delivery
